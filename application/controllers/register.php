@@ -3,7 +3,7 @@ class Register extends CI_Controller {
 
 	function index()
 	{
-		echo $this->input->post('password');
+
 		$this->load->database();
 		$this->load->helper(array('form', 'url'));
 
@@ -19,14 +19,25 @@ class Register extends CI_Controller {
 		}
 		else
 		{
-			$sql = "INSERT INTO users (email,password,salt) values (";
+			$cryptographically_strong = false;
+			
+			while(!$cryptographically_strong){
+				$salt = openssl_random_pseudo_bytes(64,$cryptographically_strong);
+			}
+			
+			$password = hash("sha256",$salt.$this->input->post('password'));
+			
+			$email = $this->input->post('email');
+			
+			$sql = "INSERT INTO users (email,password,salt) values (?,?,?)";
+			$this->db->query($sql, array($this->db->escape($email), $password, $salt));
 			
 			$this->load->view('registersuccess');
 		}
 	}
 	
 	public function password_check($str){
-		if($str == $str){
+		if($str == "password"){
 			$this->form_validation->set_message('password_check', 'Your password cannot be "Password"');
 			return false;
 		}else{
