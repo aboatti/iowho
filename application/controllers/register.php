@@ -22,7 +22,7 @@ class Register extends CI_Controller {
 			$cryptographically_strong = false;
 			
 			while(!$cryptographically_strong){
-				$salt = openssl_random_pseudo_bytes(64,$cryptographically_strong);
+				$salt = openssl_random_pseudo_bytes(32,$cryptographically_strong);
 			}
 			$salt   = bin2hex($salt);
 			
