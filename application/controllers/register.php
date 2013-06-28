@@ -3,6 +3,7 @@ class Register extends CI_Controller {
 
 	function index()
 	{
+		echo $this->input->post('password');
 		$this->load->database();
 		$this->load->helper(array('form', 'url'));
 
@@ -18,12 +19,14 @@ class Register extends CI_Controller {
 		}
 		else
 		{
+			$sql = "INSERT INTO users (email,password,salt) values (";
+			
 			$this->load->view('registersuccess');
 		}
 	}
 	
 	public function password_check($str){
-		if($str == $password){
+		if($str == $str){
 			$this->form_validation->set_message('password_check', 'Your password cannot be "Password"');
 			return false;
 		}else{
