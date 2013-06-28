@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
-class Someclass {
+class Password {
 
 	//Hashes and salts a password
 	//returns array
