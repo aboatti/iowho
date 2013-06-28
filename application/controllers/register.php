@@ -1,4 +1,5 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 class Register extends CI_Controller {
 
 	function index()
@@ -8,7 +9,8 @@ class Register extends CI_Controller {
 		$this->load->helper(array('form', 'url'));
 
 		$this->load->library('form_validation');
-
+		$this->load->model('User');
+		
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('password', 'Password', 'required|matches[passconf]|min_length[8]|callback_password_check');
 		$this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
@@ -19,24 +21,7 @@ class Register extends CI_Controller {
 		}
 		else
 		{
-			$cryptographically_strong = false;
-			
-			while(!$cryptographically_strong){
-				$salt = openssl_random_pseudo_bytes(32,$cryptographically_strong);
-			}
-			$salt   = bin2hex($salt);
-			
-			$password = hash("sha256",$salt.$this->input->post('password'));
-			
-			$email = $this->input->post('email');
-
-			$data = array(
-   				'email' => $email,
-   				'password' => $password,
-   				'salt' => $salt
-			);
-			$this->db->insert('users', $data); 
-			$userID = $this->db->insert_id();
+			$userID = $this->user->createNewUser($this->input->post('email'),$this->input->post('password'));
 			
 			$sessionData = array('user_id' => $userID,"logged_in" => TRUE);
 			
