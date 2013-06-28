@@ -24,6 +24,7 @@ class Register extends CI_Controller {
 			while(!$cryptographically_strong){
 				$salt = openssl_random_pseudo_bytes(64,$cryptographically_strong);
 			}
+			$salt   = bin2hex($bytes);
 			
 			$password = hash("sha256",$salt.$this->input->post('password'));
 			
