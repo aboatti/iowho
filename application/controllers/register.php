@@ -38,7 +38,7 @@ class Register extends CI_Controller {
 			$this->db->insert('users', $data); 
 			$userID = $this->db->insert_id();
 			
-			$sessionData = array('user_id' => $userID);
+			$sessionData = array('user_id' => $userID,"logged_in" = TRUE);
 			
 			$this->session->set_userdata($sessionData );
 			$this->load->view('registersuccess');
