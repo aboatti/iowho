@@ -5,6 +5,7 @@ class User extends CI_Model {
     function __construct()
     {
         parent::__construct();
+        $this->load->database();
     }
     //inserts a new user into the db and returns the new id
     function createNewUser($email,$password){
@@ -45,3 +46,5 @@ class User extends CI_Model {
 	}
     
 }
+
+?>
