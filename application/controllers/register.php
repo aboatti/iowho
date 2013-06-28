@@ -33,6 +33,9 @@ class Register extends CI_Controller {
 			$sql = "INSERT INTO users (email,password,salt) values (?,?,?)";
 			$this->db->query($sql, array($this->db->escape($email), $password, $salt));
 			
+			$sessionData = array('user_id' => $userID);
+			
+			$this->session->set_userdata($sessionData);
 			$this->load->view('registersuccess');
 		}
 	}
