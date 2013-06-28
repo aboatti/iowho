@@ -6,12 +6,12 @@ class User extends CI_Model {
     {
         parent::__construct();
         $this->load->database();
-    }
+	$this->load->library('password');    
+}	
     //inserts a new user into the db and returns the new id
-    function createNewUser($email,$password){
-    	$this->load->library('password');
-		
-    	list($hashedPass,$salt) = $this->password->hashAndSalt($password);
+    function createNewUser($email,$password)
+    {
+		list($hashedPass,$salt) = $this->password->hashAndSalt($password);
 
 		$data = array(
    			'email' => $email,
@@ -27,14 +27,14 @@ class User extends CI_Model {
 	//should update to return specific error codes later
 	function validateUser($email,$password){
 		$query = $this->db->get_where('users', array('email' => $email));
-		$row = $query->row();
+		$row = $query->row() ;
 		if(!$row){
 			return false;
 		}else{
 			$salt = $row->salt;
 			$storedHashedPass = $row->password;
 			
-			$generatedHashedPass = $this->password->hashAndSalt($password,$salt);
+			list($generatedHashedPass,$salt) = $this->password->hashAndSalt($password,$salt);
 			
 			if($storedHashedPass == $generatedHashedPass){
 				return $row->id;
