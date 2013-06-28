@@ -21,7 +21,7 @@ class Test extends CI_Controller {
 	{
 			$this->load->database();
 			$sql = "select salt from users where email='aboatti@gmail.com'";
-			$this->db->query($sql);
+			$query = $this->db->query($sql);
 			$row = $query->row();
 			$salt = $row->salt;
 			echo $salt;
