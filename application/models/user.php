@@ -26,7 +26,7 @@ class User extends CI_Model {
 	//validates email to password, returns true on success
 	//should update to return specific error codes later
 	function validateUser($email,$password){
-		$query = $this->db->get_where('users', array('email' => $id));
+		$query = $this->db->get_where('users', array('email' => $email));
 		$row = $query->row();
 		if(!$row){
 			return false;
@@ -37,7 +37,7 @@ class User extends CI_Model {
 			$generatedHashedPass = $this->password->hashAndSalt($password,$salt);
 			
 			if($storedHashedPass == $generatedHashedPass){
-				return true;
+				return $row->id;
 			}else{
 				return false;
 							
