@@ -25,9 +25,9 @@ class Register extends CI_Controller {
 				$salt = openssl_random_pseudo_bytes(64,$cryptographically_strong);
 			}
 			$salt   = bin2hex($salt);
-			
+			echo $this->input->post('password');	
 			$password = hash("sha256",$salt.$this->input->post('password'));
-			
+			echo "<br> $password";
 			$email = $this->input->post('email');
 			
 			$sql = "INSERT INTO users (email,password,salt) values (?,?,?)";
