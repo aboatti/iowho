@@ -29,13 +29,18 @@ class Register extends CI_Controller {
 			$password = hash("sha256",$salt.$this->input->post('password'));
 			echo "<br> $password";
 			$email = $this->input->post('email');
-			
-			$sql = "INSERT INTO users (email,password,salt) values (?,?,?)";
-			$this->db->query($sql, array($this->db->escape($email), $password, $salt));
+
+			$data = array(
+   				'email' => $email,
+   				'password' => $password,
+   				'salt' => $salt
+			);
+			$this->db->insert('users', $data); 
+			$userID = $this->db->insert_id();
 			
 			$sessionData = array('user_id' => $userID);
 			
-			$this->session->set_userdata($sessionData);
+			$this->session->set_userdata($sessionData );
 			$this->load->view('registersuccess');
 		}
 	}
