@@ -20,6 +20,7 @@ class Test extends CI_Controller {
 	public function index()
 	{
 			$this->load->database();
+			var_dump($this->session->all_userdata());
 			$sql = "select salt from users where id=1";
 			$query = $this->db->query($sql);
 			$row = $query->row();
