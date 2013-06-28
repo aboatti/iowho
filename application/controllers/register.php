@@ -3,6 +3,7 @@ class Register extends CI_Controller {
 
 	function index()
 	{
+		$this->load->database();
 		$this->load->helper(array('form', 'url'));
 
 		$this->load->library('form_validation');
