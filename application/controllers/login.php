@@ -22,7 +22,7 @@ class Register extends CI_Controller {
 		else
 		{
 			
-			if($userID = $this->user->validateUser($this->input->post('email'),$this->input->post('password'))){
+			if($userID = $this->User->validateUser($this->input->post('email'),$this->input->post('password'))){
 				$sessionData = array('user_id' => $userID,"logged_in" => TRUE);
 				$this->load->view('loginsuccess');				
 			}else{
