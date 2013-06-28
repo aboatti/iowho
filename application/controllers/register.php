@@ -21,7 +21,7 @@ class Register extends CI_Controller {
 		}
 		else
 		{
-			$userID = $this->user->createNewUser($this->input->post('email'),$this->input->post('password'));
+			$userID = $this->User->createNewUser($this->input->post('email'),$this->input->post('password'));
 			
 			$sessionData = array('user_id' => $userID,"logged_in" => TRUE);
 			
