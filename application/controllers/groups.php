@@ -6,11 +6,14 @@ class Groups extends CI_Controller {
 	{
 		parent::__construct();
 		redirectIfNotLoggedIn();
-	//	$this->load->model('Groups');
+		$this->load->model('group');
 	}	
 	public function index()
 	{
-		$this->load->view("groups");
+		$this->load->model('User');
+		$groups = $this->user->getUserGroups();
+		$data['groups'] = $groups;
+		$this->load->view("groups",$data);
 	}
 
 	public function create()
@@ -30,7 +33,6 @@ class Groups extends CI_Controller {
 		}
 		else
 		{	
-			$this->load->model('group');
 			$groupID = $this->group->createGroup($this->input->post('name'),$this->input->post('description'));
 			$this->group->addUser($this->session->userdata("user_id"),$groupID);
 			redirect("/groups");
