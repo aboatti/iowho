@@ -11,7 +11,7 @@ class Groups extends CI_Controller {
 	public function index()
 	{
 		$this->load->model('User');
-		$groups = $this->User->getUserGroups();
+		$groups = $this->User->getUserGroups($this->session->userdata("user_id"));
 		$data['groups'] = $groups;
 		$this->load->view("groups",$data);
 	}
