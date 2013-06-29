@@ -5,7 +5,7 @@
 <body>
 <?php echo validation_errors('<div class="error">', '</div>'); ?>
 
-<?php echo form_open('group/create'); ?>
+<?php echo form_open('groups/create'); ?>
 
 
 <h5>Group Name</h5>
