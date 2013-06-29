@@ -10,9 +10,7 @@ class Groups extends CI_Controller {
 	}	
 	public function index()
 	{
-	
-
-		echo "welcome to groups!!";	
+		$this->load->view("groups");
 	}
 
 	public function create()
@@ -35,7 +33,7 @@ class Groups extends CI_Controller {
 			$this->load->model('group');
 			$groupID = $this->group->createGroup($this->input->post('name'),$this->input->post('description'));
 			$this->group->addUser($this->session->userdata("user_id"),$groupID);
-			$this->load->view("groups");
+			redirect("/groups");
 		}
 		//echo "create a group"; 
 	}		

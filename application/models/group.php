@@ -15,7 +15,7 @@ class Group extends CI_Model {
 		$data = array(
    			'name' => $name,
    			'description' => $description,
-   			'created' => time(),
+   			'created' => date("Y-m-d H:i:s"),
    			'creator' => $userID
 		);
 			
