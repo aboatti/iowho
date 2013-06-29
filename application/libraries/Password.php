@@ -8,8 +8,9 @@ class Password {
     {
     	$cryptographically_strong = false;
 		if($salt == -1){	
-			while(!$cryptographically_strong){
-				$salt = openssl_random_pseudo_bytes(32,$cryptographically_strong);
+			$salt = openssl_random_pseudo_bytes(32,$cryptographically_strong);
+			if(!$cryptographically_strong){
+				throw new Exception("random numbers aren't cryptographically strong non this server");
 			}
 			$salt   = bin2hex($salt);
 		}

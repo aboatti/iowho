@@ -22,6 +22,7 @@ class User extends CI_Model {
 			
 		$this->db->insert('users', $data); 
 		$userID = $this->db->insert_id();
+		return $userID;
 	}
 	
 	//validates email to password, returns true on success
