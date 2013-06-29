@@ -51,7 +51,7 @@ class User extends CI_Model {
 		$this->db->select('groups.name,groups.description,groups.id');
 		$this->db->from('groups');
 		$this->db->join('group_members', 'group_members.group_id = groups.id');
-		$query = $this->db->get_where('group_members.user_id',$userID);
+		$query = $this->db->get_where('group_members', array('group_members.user_id' => $userID));
 		
 		$groups = array();
 		foreach($query->result_array() as $row){
