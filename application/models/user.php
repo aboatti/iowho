@@ -6,10 +6,11 @@ class User extends CI_Model {
     {
         parent::__construct();
         $this->load->database();
+        $this->load->library('password');
     }
     //inserts a new user into the db and returns the new id
     function createNewUser($email,$password){
-    	$this->load->library('password');
+    	
 		
     	list($hashedPass,$salt) = $this->password->hashAndSalt($password);
 
