@@ -24,6 +24,7 @@ class Login extends CI_Controller {
 			
 			if($userID = $this->User->validateUser($this->input->post('email'),$this->input->post('password'))){
 				$sessionData = array('user_id' => $userID,"logged_in" => TRUE);
+				$this->session->set_userdata($sessionData);
 				$this->load->view('loginsuccess');				
 			}else{
 				$this->form_validation->set_message('index', 'Login Failed');

@@ -20,12 +20,15 @@ class Test extends CI_Controller {
 	public function index()
 	{
 			$this->load->database();
-			$sql = "select salt from users where email='aboatti@gmail.com'";
+			var_dump($this->session->all_userdata());
+			$sql = "select salt from users where id=1";
 			$query = $this->db->query($sql);
 			$row = $query->row();
 			$salt = $row->salt;
 			echo $salt;
 			echo "<br>";
-			echo $password = hash("sha256",$salt."4p3ace2012");
-	}
+			$password = hash("sha256",$salt."4p3ace2012");
+			echo $password;
+}
+
 }
