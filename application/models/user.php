@@ -10,7 +10,7 @@ class User extends CI_Model {
     }
     
     //inserts a new user into the db and returns the new id
-    function createNewUser($email,$password)
+    public function createNewUser($email,$password)
     {
 		list($hashedPass,$salt) = $this->password->hashAndSalt($password);
 
@@ -27,7 +27,7 @@ class User extends CI_Model {
 	
 	//validates email to password, returns true on success
 	//should update to return specific error codes later
-	function validateUser($email,$password){
+	public function validateUser($email,$password){
 		$query = $this->db->get_where('users', array('email' => $email));
 		$row = $query->row() ;
 		if(!$row){
@@ -46,8 +46,17 @@ class User extends CI_Model {
 		}   
 	}
 	
+	public function isUser($email){
+		$query = $this->db->get_where('users', array('email' => $email));
+		$row = $query->row() ;
+		if(!$row){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	//returns an array of all the groups the member is in
-	function getUserGroups($userID){
+	public function getUserGroups($userID){
 		$this->db->select('groups.name,groups.description,groups.id');
 		$this->db->from('groups');
 		$this->db->join('group_members', 'group_members.group_id = groups.id');

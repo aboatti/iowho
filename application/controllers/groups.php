@@ -24,8 +24,7 @@ class Groups extends CI_Controller {
 		
 		//$this->load->model('User');
 		
-		$this->form_validation->set_rules('name', 'Group Name', 'trim|required|max_length[78]');
-		$this->form_validation->set_rules('description', 'Description', 'trim|max_length[253]');
+		$this->form_validation->set_rules('name', 'Group Name', 'trim|required|valid_email|');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -39,7 +38,39 @@ class Groups extends CI_Controller {
 		}
 		//echo "create a group"; 
 	}		
-
+	
+	public function invite()
+	{	
+		$this->load->helper(array('form', 'url'));
+		
+		$this->load->library('form_validation');
+		
+		//$this->load->model('User');
+		
+		$this->form_validation->set_rules('email', 'Friend\'s email', 'trim|required|max_length[78]|callback_existing_user');
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('invite_to_group');
+		}
+		else
+		{	
+			$groupID = $this->group->createGroup($this->input->post('name'),$this->input->post('description'));
+			$this->group->addUser($this->session->userdata("user_id"),$groupID);
+			redirect("/groups");
+		}
+		//echo "create a group"; 
+	}
+	
+	private function existing_user($str){
+		$this->load->model('User');
+		if(!isUser($str)){
+			$this->form_validation->set_message('password_check', 'This person is not a member"');
+			return false;
+		}else{
+			return true;
+		}
+	}
 }
 	
 ?>
